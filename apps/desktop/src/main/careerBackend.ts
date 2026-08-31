@@ -963,9 +963,10 @@ export class CareerBackend {
             },
           )
         }
+        const canonicalParent = dirname(dataDirectory)
         const tombstone = this.#verifiedChildPath(
-          userData,
-          join(userData, `${DELETE_TOMBSTONE_PREFIX}${randomUUID()}`),
+          canonicalParent,
+          join(canonicalParent, `${DELETE_TOMBSTONE_PREFIX}${randomUUID()}`),
         )
         try {
           const deletion = await deleteEncryptedVaultDirectory({
