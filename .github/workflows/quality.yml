@@ -30,7 +30,20 @@ jobs:
       - run: pnpm format:check
       - run: pnpm typecheck
       - run: pnpm lint
-      - run: pnpm test:coverage
+      - name: Full coverage suite on Windows
+        if: matrix.os == 'windows-latest'
+        run: pnpm test:coverage
+      - name: Cross-platform package tests on Linux
+        if: matrix.os == 'ubuntu-latest'
+        run: >-
+          pnpm build:packages && pnpm
+          --filter @bosshunter/domain
+          --filter @bosshunter/connectors
+          --filter @bosshunter/ingest
+          --filter @bosshunter/resume
+          --filter @bosshunter/storage
+          --filter @bosshunter/application
+          test
       - run: pnpm build
 
   desktop-e2e:

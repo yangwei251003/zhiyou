@@ -357,8 +357,12 @@ try {
 
   await runStep('简历来源、ATS 预览与导出阻断', async () => {
     await useNavigation('简历工作室', '简历工作室')
-    await expectVisible(page.getByRole('heading', { name: '来源检查器' }))
+    const inspectorHeading = page.getByRole('heading', { name: '来源检查器' })
+    if (!(await inspectorHeading.isVisible())) {
+      await expectVisible(page.getByRole('button', { name: '来源检查器' }))
+    }
     await page.getByRole('button', { name: '查看来源' }).first().press('Enter')
+    await expectVisible(inspectorHeading)
     await expectVisible(page.getByText(/18 名学生的访谈与可用性测试/u).first())
     await page.getByRole('button', { name: 'ATS 纯文本' }).press('Enter')
     await expectVisible(page.getByLabel('ATS 纯文本预览'))

@@ -120,14 +120,38 @@ export interface VaultDeletionOperations {
 
 const vaultDeletionOperations: VaultDeletionOperations = {
   async renameDirectory(source, destination) {
-    await rename(source, destination)
+    await retryTransientWindowsFilesystemOperation(() => rename(source, destination))
   },
   async removeKey(path) {
-    await rm(path, { force: true })
+    await retryTransientWindowsFilesystemOperation(() => rm(path, { force: true }))
   },
   async removeDirectory(directory) {
     await removeVerifiedChildDirectory(directory)
   },
+}
+
+const TRANSIENT_WINDOWS_FILESYSTEM_CODES = new Set(['EACCES', 'EBUSY', 'EPERM'])
+
+async function retryTransientWindowsFilesystemOperation<T>(
+  operation: () => Promise<T>,
+): Promise<T> {
+  const maximumAttempts = 5
+  for (let attempt = 1; ; attempt += 1) {
+    try {
+      return await operation()
+    } catch (error) {
+      const code = (error as NodeJS.ErrnoException).code
+      if (
+        process.platform !== 'win32' ||
+        code === undefined ||
+        !TRANSIENT_WINDOWS_FILESYSTEM_CODES.has(code) ||
+        attempt >= maximumAttempts
+      ) {
+        throw error
+      }
+      await new Promise((resolveDelay) => setTimeout(resolveDelay, 25 * 2 ** (attempt - 1)))
+    }
+  }
 }
 
 export class VaultKeyEraseRestoreError extends Error {

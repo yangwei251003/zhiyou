@@ -144,7 +144,7 @@ describe('career vault encryption availability lifecycle', () => {
 
     electronState.showMessageBox.mockResolvedValueOnce({ response: 1 })
     const deletion = await unavailableBackend.deleteVault()
-    expect(deletion).toMatchObject({
+    expect(deletion, JSON.stringify(deletion)).toMatchObject({
       ok: true,
       value: {
         deleted: true,
