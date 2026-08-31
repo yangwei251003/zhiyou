@@ -229,12 +229,7 @@ function result<T>(operation: () => Promise<T> | T): Promise<DesktopResult<T>> {
     .then(operation)
     .then((value) => ({ ok: true as const, value }))
     .catch((error: unknown) => {
-      if (
-        process.env['VITEST'] === 'true' &&
-        !(error instanceof ApplicationError) &&
-        !(error instanceof IngestError) &&
-        !(error instanceof AiProviderError)
-      ) {
+      if (process.env['VITEST'] === 'true' || process.env['CI'] === 'true') {
         console.error('Unexpected desktop backend error during test', error)
       }
       return { ok: false as const, error: desktopError(error) }
