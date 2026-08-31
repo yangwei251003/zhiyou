@@ -261,8 +261,8 @@ export class SingleWriterStorage {
 
   close(): void {
     if (this.#closed) return
-    this.#closed = true
     this.#database.close()
+    this.#closed = true
     if (this.#lockKey !== undefined) writerPaths.delete(this.#lockKey)
   }
 

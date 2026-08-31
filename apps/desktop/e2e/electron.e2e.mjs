@@ -364,6 +364,8 @@ try {
     await page.getByRole('button', { name: '查看来源' }).first().press('Enter')
     await expectVisible(inspectorHeading)
     await expectVisible(page.getByText(/18 名学生的访谈与可用性测试/u).first())
+    const inspectorClose = page.getByRole('button', { name: '关闭' })
+    if (await inspectorClose.isVisible()) await inspectorClose.click()
     await page.getByRole('button', { name: 'ATS 纯文本' }).press('Enter')
     await expectVisible(page.getByLabel('ATS 纯文本预览'))
     await page.getByRole('button', { name: '招聘者阅读' }).press('Enter')

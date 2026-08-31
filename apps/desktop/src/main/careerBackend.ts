@@ -228,7 +228,17 @@ function result<T>(operation: () => Promise<T> | T): Promise<DesktopResult<T>> {
   return Promise.resolve()
     .then(operation)
     .then((value) => ({ ok: true as const, value }))
-    .catch((error: unknown) => ({ ok: false as const, error: desktopError(error) }))
+    .catch((error: unknown) => {
+      if (
+        process.env['VITEST'] === 'true' &&
+        !(error instanceof ApplicationError) &&
+        !(error instanceof IngestError) &&
+        !(error instanceof AiProviderError)
+      ) {
+        console.error('Unexpected desktop backend error during test', error)
+      }
+      return { ok: false as const, error: desktopError(error) }
+    })
 }
 
 function timestampFromEpoch(value: number | undefined): string | null {
