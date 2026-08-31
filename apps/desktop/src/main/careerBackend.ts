@@ -229,7 +229,12 @@ function result<T>(operation: () => Promise<T> | T): Promise<DesktopResult<T>> {
     .then(operation)
     .then((value) => ({ ok: true as const, value }))
     .catch((error: unknown) => {
-      if (process.env['VITEST'] === 'true' || process.env['CI'] === 'true') {
+      if (
+        process.env['VITEST'] === 'true' &&
+        !(error instanceof ApplicationError) &&
+        !(error instanceof IngestError) &&
+        !(error instanceof AiProviderError)
+      ) {
         console.error('Unexpected desktop backend error during test', error)
       }
       return { ok: false as const, error: desktopError(error) }
@@ -1739,7 +1744,11 @@ export class CareerBackend {
   }
 
   async #verifiedDeletableDirectory(parent: string, candidate: string): Promise<string | null> {
-    const lexicalCandidate = this.#verifiedChildPath(parent, candidate)
+    // Windows can expose the same directory through both an 8.3 short path and
+    // its canonical long path. Reading metadata before the canonical check is
+    // safe; every mutating caller only receives a path after realpath proves it
+    // is a non-link child of the allowed parent.
+    const lexicalCandidate = resolve(candidate)
     try {
       const metadata = await lstat(lexicalCandidate)
       if (!metadata.isDirectory() || metadata.isSymbolicLink()) {
