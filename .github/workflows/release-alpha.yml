@@ -28,7 +28,7 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - name: Prepare pinned Electron runtime
-        run: node node_modules/electron/install.js
+        run: node apps/desktop/node_modules/electron/install.js
       - run: pnpm quality
       - run: pnpm package:win
       - run: pnpm test:packaged
