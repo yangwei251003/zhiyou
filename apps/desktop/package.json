@@ -1,0 +1,51 @@
+{
+  "name": "@bosshunter/desktop",
+  "version": "0.1.0-alpha.1",
+  "private": true,
+  "description": "本地优先、证据驱动的 AI 求职与岗位简历工作台",
+  "license": "UNLICENSED",
+  "author": {
+    "name": "yangwei251003",
+    "url": "https://github.com/yangwei251003"
+  },
+  "type": "module",
+  "main": "./out/main/index.js",
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "preview": "electron-vite preview",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:e2e": "electron-vite build && node ./e2e/electron.e2e.mjs",
+    "package:win": "electron-vite build && electron-builder --win --x64 --dir --publish never && pwsh -NoProfile -File ./scripts/archive-windows.ps1",
+    "test:packaged": "node ./e2e/packaged.e2e.mjs",
+    "test:coverage": "vitest run --coverage"
+  },
+  "dependencies": {
+    "@bosshunter/ai": "workspace:*",
+    "@bosshunter/application": "workspace:*",
+    "@bosshunter/domain": "workspace:*",
+    "@bosshunter/ingest": "workspace:*",
+    "@bosshunter/resume": "workspace:*",
+    "@bosshunter/storage": "workspace:*",
+    "lucide-react": "^0.468.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "zod": "^4.1.5"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.1.0",
+    "@testing-library/user-event": "^14.5.2",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react": "^4.3.4",
+    "electron": "^44.0.0",
+    "electron-builder": "26.15.7",
+    "electron-vite": "^3.0.0",
+    "jsdom": "^25.0.1",
+    "playwright": "^1.62.1",
+    "vite": "^6.0.7",
+    "vitest": "^3.2.4"
+  }
+}

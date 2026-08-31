@@ -1,0 +1,58 @@
+name: windows-alpha-release
+
+on:
+  push:
+    tags:
+      - 'v*-alpha.*'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: windows-alpha-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  package:
+    name: Build and publish unsigned Windows alpha
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: pnpm/action-setup@f40ffcd9367d9f12939873eb1018b921a783ffaa # v4
+        with:
+          version: 10.33.2
+          run_install: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22.16.0
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm quality
+      - run: pnpm package:win
+      - run: pnpm test:packaged
+      - name: Write SHA-256 manifest
+        shell: pwsh
+        run: |
+          $artifact = Get-ChildItem -LiteralPath 'apps/desktop/release' -Filter '*.zip' -File | Select-Object -First 1
+          if ($null -eq $artifact) { throw 'Portable Windows archive was not produced' }
+          $hash = (Get-FileHash -LiteralPath $artifact.FullName -Algorithm SHA256).Hash.ToLowerInvariant()
+          "$hash  $($artifact.Name)" | Set-Content -LiteralPath 'apps/desktop/release/SHA256SUMS.txt' -Encoding utf8NoBOM
+      - name: Preserve release evidence
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: windows-alpha-${{ github.ref_name }}
+          path: |
+            apps/desktop/release/*.zip
+            apps/desktop/release/SHA256SUMS.txt
+          if-no-files-found: error
+          retention-days: 30
+      - name: Create GitHub pre-release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $tag = '${{ github.ref_name }}'
+          $notes = "docs/releases/$tag.md"
+          if (-not (Test-Path -LiteralPath $notes)) { throw "Missing release notes: $notes" }
+          $artifact = Get-ChildItem -LiteralPath 'apps/desktop/release' -Filter '*.zip' -File | Select-Object -First 1
+          gh release create $tag --verify-tag --prerelease --title "BossHunter Next $tag" --notes-file $notes $artifact.FullName 'apps/desktop/release/SHA256SUMS.txt'

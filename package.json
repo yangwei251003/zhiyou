@@ -1,0 +1,50 @@
+{
+  "name": "bosshunter-next",
+  "version": "0.1.0-alpha.1",
+  "private": true,
+  "description": "Evidence-first local career operating system",
+  "license": "UNLICENSED",
+  "author": {
+    "name": "yangwei251003",
+    "url": "https://github.com/yangwei251003"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yangwei251003/zhiyou.git"
+  },
+  "homepage": "https://github.com/yangwei251003/zhiyou#readme",
+  "bugs": {
+    "url": "https://github.com/yangwei251003/zhiyou/issues"
+  },
+  "packageManager": "pnpm@10.33.2",
+  "engines": {
+    "node": ">=22.12"
+  },
+  "scripts": {
+    "dev": "pnpm build:packages && pnpm --filter @bosshunter/desktop dev",
+    "build": "pnpm -r build",
+    "build:packages": "pnpm -r --filter \"./packages/*\" run build",
+    "typecheck": "pnpm build:packages && pnpm -r typecheck",
+    "test": "pnpm build:packages && pnpm -r test",
+    "test:coverage": "pnpm build:packages && pnpm -r test:coverage",
+    "lint": "eslint .",
+    "format:check": "prettier --check .",
+    "test:e2e": "pnpm build:packages && pnpm --filter @bosshunter/desktop test:e2e",
+    "package:win": "pnpm build:packages && pnpm --filter @bosshunter/desktop package:win",
+    "test:packaged": "pnpm --filter @bosshunter/desktop test:packaged",
+    "test:windows-trust": "pnpm --filter @bosshunter/ai test:windows-trust",
+    "quality": "pnpm format:check && pnpm typecheck && pnpm lint && pnpm test && pnpm build"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.35.0",
+    "@types/node": "^24.3.0",
+    "eslint": "^9.35.0",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^16.3.0",
+    "prettier": "^3.6.2",
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.42.0",
+    "@vitest/coverage-v8": "^3.2.4",
+    "vitest": "^3.2.4"
+  }
+}

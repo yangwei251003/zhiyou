@@ -1,0 +1,21 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": false,
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@renderer/*": ["src/renderer/src/*"],
+      "@shared/*": ["src/shared/*"]
+    },
+    "types": ["node", "electron", "vitest/globals", "@testing-library/jest-dom"]
+  },
+  "include": [
+    "electron.vite.config.ts",
+    "vitest.config.ts",
+    "e2e/**/*.mjs",
+    "src/**/*.ts",
+    "src/**/*.tsx"
+  ]
+}
