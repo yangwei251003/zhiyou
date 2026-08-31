@@ -4,12 +4,18 @@ on:
   push:
     tags:
       - 'v*-alpha.*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing alpha tag to rebuild and publish
+        required: true
+        type: string
 
 permissions:
   contents: write
 
 concurrency:
-  group: windows-alpha-${{ github.ref }}
+  group: windows-alpha-${{ inputs.tag || github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -18,6 +24,8 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ inputs.tag || github.ref }}
       - uses: pnpm/action-setup@f40ffcd9367d9f12939873eb1018b921a783ffaa # v4
         with:
           version: 10.33.2
@@ -42,7 +50,7 @@ jobs:
       - name: Preserve release evidence
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: windows-alpha-${{ github.ref_name }}
+          name: windows-alpha-${{ inputs.tag || github.ref_name }}
           path: |
             apps/desktop/release/*.zip
             apps/desktop/release/SHA256SUMS.txt
@@ -53,8 +61,15 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          $tag = '${{ github.ref_name }}'
+          $tag = '${{ inputs.tag || github.ref_name }}'
+          if ($tag -notmatch '^v.+-alpha\.[0-9]+$') { throw "Refusing a non-alpha release tag: $tag" }
           $notes = "docs/releases/$tag.md"
           if (-not (Test-Path -LiteralPath $notes)) { throw "Missing release notes: $notes" }
           $artifact = Get-ChildItem -LiteralPath 'apps/desktop/release' -Filter '*.zip' -File | Select-Object -First 1
-          gh release create $tag --verify-tag --prerelease --title "BossHunter Next $tag" --notes-file $notes $artifact.FullName 'apps/desktop/release/SHA256SUMS.txt'
+          gh release view $tag *> $null
+          if ($LASTEXITCODE -eq 0) {
+            gh release upload $tag --clobber $artifact.FullName 'apps/desktop/release/SHA256SUMS.txt'
+            gh release edit $tag --prerelease --title "BossHunter Next $tag" --notes-file $notes
+          } else {
+            gh release create $tag --verify-tag --prerelease --title "BossHunter Next $tag" --notes-file $notes $artifact.FullName 'apps/desktop/release/SHA256SUMS.txt'
+          }
