@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>BossHunter Next · 开源项目导览</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <a class="brand" href="https://github.com/yangwei251003">Y / W</a
+      ><a href="https://github.com/yangwei251003/zhiyou">查看完整源码 ↗</a>
+    </header>
+    <main>
+      <section class="hero">
+        <div>
+          <p class="eyebrow">OPEN SOURCE / PROJECT FIELD NOTES</p>
+          <h1>BossHunter Next</h1>
+          <p class="tagline">先核验经历，再为每个岗位组织真实证据。</p>
+          <p class="scope">
+            这是Windows桌面应用的静态项目导览，截图为程序既有的本地演示工作区。完整导入、AI深访和简历导出需要从当前源码运行；本页不模拟真实账号连接。
+          </p>
+          <div class="tags">
+            <span>Electron</span><span>React</span><span>TypeScript</span><span>本地优先</span
+            ><span>MIT</span>
+          </div>
+          <a class="primary" href="#start">从源码运行 <span>↓</span></a>
+        </div>
+        <figure>
+          <img src="assets/product.png" alt="BossHunter Next真实界面截图" />
+          <figcaption>真实项目界面 · 具体运行范围见下方说明</figcaption>
+        </figure>
+      </section>
+      <section id="features">
+        <div class="section-head">
+          <p class="eyebrow">01 / EXPLORE</p>
+          <h2>从问题，到实现。</h2>
+        </div>
+        <div class="features">
+          <button class="feature" data-index="0" aria-pressed="true">
+            <small>01</small><strong>职业证据库</strong
+            ><span>把经历整理为可核验的事实。</span></button
+          ><button class="feature" data-index="1" aria-pressed="false">
+            <small>02</small><strong>岗位与简历</strong
+            ><span>让每条表述有可追溯的来源。</span></button
+          ><button class="feature" data-index="2" aria-pressed="false">
+            <small>03</small><strong>本机与隐私</strong><span>个人资料由使用者自己掌握。</span>
+          </button>
+        </div>
+        <div class="detail" aria-live="polite">
+          <span id="detail-label">职业证据库</span>
+          <p id="detail-copy">
+            导入文档、整理个人事实与候选记录，核验后再用于岗位简历。图中是项目自带本地演示数据，不代表连接真实招聘平台。
+          </p>
+        </div>
+      </section>
+      <section id="start">
+        <div class="section-head">
+          <p class="eyebrow">02 / RUN LOCALLY</p>
+          <h2>把项目带到你的环境。</h2>
+        </div>
+        <p class="intro">
+          以下为运行入口；数据库、服务密钥与平台账号由使用者自行配置。复制命令前先阅读仓库README的完整前置条件。
+        </p>
+        <div class="command">
+          <span>获取源码</span><code>git clone https://github.com/yangwei251003/zhiyou.git</code
+          ><button
+            data-copy="git clone https://github.com/yangwei251003/zhiyou.git"
+            aria-label="复制获取源码"
+          >
+            复制
+          </button>
+        </div>
+        <div class="command">
+          <span>启动开发</span><code>cd zhiyou pnpm install --frozen-lockfile pnpm dev</code
+          ><button
+            data-copy="cd zhiyou
+pnpm install --frozen-lockfile
+pnpm dev"
+            aria-label="复制启动开发"
+          >
+            复制
+          </button>
+        </div>
+        <div class="command">
+          <span>质量检查</span><code>pnpm quality pnpm test:coverage pnpm test:e2e</code
+          ><button
+            data-copy="pnpm quality
+pnpm test:coverage
+pnpm test:e2e"
+            aria-label="复制质量检查"
+          >
+            复制
+          </button>
+        </div>
+        <p id="copy-status" aria-live="polite"></p>
+      </section>
+      <section class="note">
+        <h2>公开体验的范围</h2>
+        <p>
+          这是Windows桌面应用的静态项目导览，截图为程序既有的本地演示工作区。完整导入、AI深访和简历导出需要从当前源码运行；本页不模拟真实账号连接。
+        </p>
+        <p>
+          本页面提供项目说明、源码入口与真实画面，不提交登录信息、不请求AI模型、不接触支付或私人数据库。应用的完整行为以源码及README所列部署方式为准。
+        </p>
+        <a href="https://github.com/yangwei251003/zhiyou#readme">阅读README与验证边界 ↗</a>
+      </section>
+    </main>
+    <footer>
+      <span>yangwei251003 · 开源数字作品集</span
+      ><a href="https://github.com/yangwei251003/zhiyou/issues">反馈与交流</a>
+    </footer>
+    <script src="data.js"></script>
+    <script src="site.js"></script>
+  </body>
+</html>

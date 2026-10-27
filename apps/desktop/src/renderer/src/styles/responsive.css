@@ -1,0 +1,388 @@
+@media (max-width: 1180px) {
+  .two-column,
+  .interview-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .interview-notes {
+    border-top-color: var(--line-strong);
+  }
+
+  .resume-workbench {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 1020px) {
+  .metric-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .metric-strip > div:nth-child(2) {
+    border-right: 0;
+  }
+
+  .metric-strip > div:nth-child(-n + 2) {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .metric-strip--compact {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .metric-strip--compact > div:nth-child(2) {
+    border-right: 1px solid var(--line);
+  }
+
+  .metric-strip--compact > div:nth-child(-n + 2) {
+    border-bottom: 0;
+  }
+
+  .master-detail,
+  .opportunity-layout,
+  .inbox-layout,
+  .real-profile-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .fact-list,
+  .opportunity-list,
+  .thread-list,
+  .real-source-pane {
+    max-height: 360px;
+    overflow: auto;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .real-source-pane {
+    border-right: 0;
+  }
+
+  .resume-builder-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .opportunity-list__items {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .app-shell,
+  .app-shell[data-sidebar-collapsed='true'] {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .workspace-bar {
+    padding-inline: 14px;
+  }
+
+  .workspace-mode {
+    display: none;
+  }
+
+  .dialog-layer[data-variant='drawer'] .primary-navigation {
+    padding: 0;
+  }
+
+  .dialog-layer[data-variant='drawer'] .primary-navigation > button {
+    color: var(--ink-soft);
+  }
+
+  .dialog-layer[data-variant='drawer'] .primary-navigation > button:hover {
+    background: var(--surface-subtle);
+    color: var(--ink);
+  }
+
+  .dialog-layer[data-variant='drawer'] .primary-navigation > button[aria-current='page'] {
+    border-color: #9cbce9;
+    background: var(--brand-soft);
+    color: var(--brand-hover);
+  }
+
+  .evidence-matrix__header {
+    display: none;
+  }
+
+  .evidence-matrix__row {
+    grid-template-columns: 1fr;
+    padding: 12px;
+  }
+
+  .evidence-matrix__row > div {
+    padding: 7px 0;
+    border-right: 0;
+  }
+}
+
+@media (max-width: 780px) {
+  body {
+    overflow: auto;
+  }
+
+  .onboarding-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .onboarding-intro,
+  .onboarding-work {
+    min-height: auto;
+  }
+
+  .onboarding-intro {
+    padding: 38px 24px;
+  }
+
+  .onboarding-intro h1 {
+    font-size: 2.15rem;
+  }
+
+  .onboarding-work {
+    padding: 30px 20px;
+  }
+
+  .workspace-frame {
+    height: 100dvh;
+  }
+
+  .main-content {
+    padding: 20px 16px 34px;
+  }
+
+  .page-stack {
+    gap: 24px;
+  }
+
+  .page-header,
+  .focus-panel,
+  .matrix-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .page-header__actions,
+  .page-header__actions > .button,
+  .focus-panel > .button,
+  .matrix-heading > .button {
+    width: 100%;
+  }
+
+  .onboarding-facts > div {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .action-list li {
+    grid-template-columns: auto minmax(0, 1fr);
+    padding: 12px 0;
+  }
+
+  .action-list li > .button {
+    grid-column: 2;
+    justify-self: start;
+  }
+
+  .definition-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .definition-grid > div:nth-child(odd),
+  .definition-grid > div:nth-child(even) {
+    padding-inline: 0;
+    border-left: 0;
+  }
+
+  .opportunity-list__items {
+    grid-template-columns: 1fr;
+  }
+
+  .resume-toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .resume-document {
+    min-height: 0;
+    padding: 22px;
+  }
+
+  .resume-document > header {
+    flex-direction: column;
+  }
+
+  .form-grid-two,
+  .resume-builder-grid,
+  .resume-fact-picker {
+    grid-template-columns: 1fr;
+  }
+
+  .proposal-review__heading,
+  .resume-builder-actions,
+  .resume-export-bar,
+  .resume-version-picker,
+  .unavailable-feature {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .resume-builder-actions .button,
+  .resume-export-bar .button {
+    width: 100%;
+  }
+
+  .resume-builder-actions > div {
+    width: 100%;
+  }
+
+  .resume-export-bar > div {
+    width: 100%;
+  }
+
+  .responsive-table,
+  .responsive-table table,
+  .responsive-table tbody,
+  .responsive-table tr,
+  .responsive-table td {
+    display: block;
+  }
+
+  .responsive-table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .responsive-table tr {
+    padding: 12px;
+    border-bottom: 1px solid var(--line-strong);
+  }
+
+  .responsive-table td {
+    display: grid;
+    grid-template-columns: minmax(100px, 0.36fr) minmax(0, 1fr);
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    border: 0;
+  }
+
+  .responsive-table td::before {
+    color: var(--muted);
+    content: attr(data-label);
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+}
+
+@media (max-width: 560px) {
+  .workspace-bar__identity span {
+    display: none;
+  }
+
+  .metric-strip,
+  .metric-strip--compact {
+    grid-template-columns: 1fr;
+  }
+
+  .metric-strip > div,
+  .metric-strip--compact > div {
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .metric-strip > div:last-child,
+  .metric-strip--compact > div:last-child {
+    border-bottom: 0;
+  }
+
+  .stepper li {
+    font-size: 0.68rem;
+  }
+
+  .onboarding-step {
+    min-height: 0;
+    padding: 20px;
+  }
+
+  .fact-row {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .fact-row > .status-badge {
+    grid-column: 2;
+  }
+
+  .dialog-layer {
+    padding: 10px;
+  }
+
+  .dialog-panel {
+    max-height: calc(100dvh - 20px);
+  }
+
+  .dialog-header,
+  .dialog-body {
+    padding: 16px;
+  }
+
+  .dialog-footer {
+    padding: 12px 16px;
+  }
+
+  .dialog-footer .button {
+    flex: 1;
+  }
+
+  .claim-editor > label {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .message-panel {
+    padding: 20px 16px;
+  }
+
+  .message-actions .button,
+  .settings-actions .button {
+    width: 100%;
+  }
+
+  .settings-section__heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .verified-fact-list > li,
+  .import-report > li {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .verified-fact-list > li > svg {
+    display: none;
+  }
+
+  .fact-permission-controls {
+    max-width: none;
+    justify-content: flex-start;
+  }
+}
+
+@media (forced-colors: active) {
+  .status-badge,
+  .button,
+  .fact-row,
+  .opportunity-list__items > button,
+  .thread-list > button {
+    forced-color-adjust: auto;
+  }
+
+  .brand-mark,
+  .fact-row__icon {
+    border: 1px solid CanvasText;
+  }
+}
